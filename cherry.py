@@ -1,4 +1,4 @@
-import urllib2, json, datetime
+import urllib2, json, datetime, sys
 from bs4 import BeautifulSoup
 from twilio import TwilioRestException
 from twilio.rest import TwilioRestClient
@@ -19,10 +19,20 @@ def main():
 	message += '\nPeak bloom: ' + str(peak)
 	message += '\nPost bloom: ' + str(post)
 	message += '\n\nView the map at ' + str(url)
-	print message
+
+	""" Optional logging statements
+	logFile = open("blossom.log","a")
+	sys.stdout = logFile
+	print
+	print datetime.datetime.now()
+	print '---------------------'
+	print message """
 
 	sendText(message)
-	print 'Updates have been sent!'
+
+	""" print 'All updates sent!'
+	sys.stdout = sys.__stdout__
+	logFile.close() """
 
 def getSoup(url):
 	request = urllib2.Request(url, None, {'User-Agent':'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_4) AppleWebKit/536.11 (KHTML, like Gecko) Chrome/20.0.1132.57 Safari/536.11'})
